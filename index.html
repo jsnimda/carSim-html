@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Car Sim</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/semantic-ui-vue/dist/umd/semantic-ui-vue.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+  <!-- <script src="p5.svg.js"></script> -->
+  <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+</head>
+<body>
+  <div id="app">
+    <div id="info-panel">
+      <!-- start info-panel -->
+      <div class="section">
+        <h4 class="ui header">Controller (Gamepad)</h4>
+        Status: {{controllerConnected ? "Connected" : "Not found"}}<br>
+        {{controllerConnected ? controllerName : ""}}<br>
+        <div class="ui small labeled input">
+          <div class="ui label">
+            deadzone
+          </div>
+          <input type="text" v-model.number.lazy="deadzone">
+        </div>
+      </div>
+      <div class="ui divider"></div>
+      <div class="section">
+        <h4 class="ui header">Control Method</h4>
+      </div>
+      <div class="ui divider"></div>
+      <div class="section">
+        <h4 class="ui header">Environment</h4>
+        <code>
+          <div class="ui mini labeled input">
+            <div class="ui label">
+              maxAcceleration
+            </div>
+            <input type="text" v-model.number.lazy="environment.maxAcceleration">
+          </div>
+          <div class="ui mini labeled input">
+            <div class="ui label">
+              maxDeceleration
+            </div>
+            <input type="text" v-model.number.lazy="environment.maxDeceleration">
+          </div>
+          <div class="ui mini labeled input">
+            <div class="ui label">
+              maxVelocity
+            </div>
+            <input type="text" v-model.number.lazy="environment.maxVelocity">
+          </div>
+        </code>
+      </div>
+      <div class="ui divider"></div>
+      <div class="section">
+        <h4 class="ui header">Input</h4>
+        <code>
+          target v1: {{input.v1}} <br>
+          target v2: {{input.v2}}
+        </code>
+      </div>
+      <div class="ui divider"></div>
+      <div class="section">
+        <h4 class="ui header">Car Status</h4>
+        <code>
+          v1: {{+car.v1.toFixed(2)}} <br>
+          v2: {{+car.v2.toFixed(2)}}
+        </code>
+      </div>
+      <div class="ui divider"></div>
+      <div class="section">
+        <div class="ui checkbox">
+          <input type="checkbox" name="example" v-model="lockViewToCar">
+          <label>Lock view to car</label>
+        </div>
+        <br>
+        <div class="ui checkbox">
+          <input type="checkbox" name="example" v-model="lockAngleToCar">
+          <label>Lock angle to car</label>
+        </div>
+        <br>
+        <button class="ui button" onclick="findCenter()">Find center</button>
+        <button class="ui button" onclick="findCar()">Find car</button>
+      </div>
+      <!-- end info-panel -->
+    </div>
+  </div>
+  <div id="sketch-holder">
+    <!-- Our sketch will go here! -->
+  </div>
+  <script src='common.js'></script>
+  <script src='app.js'></script>
+  <script src='main.js'></script>
+  <script src='sketch.js'></script>
+</body>
+</html>
