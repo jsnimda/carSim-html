@@ -73,12 +73,21 @@ window.addEventListener("gamepadconnected", (event) => {
   index = event.gamepad.index;
 });
 
+function getGamepadInputs() {
+  return navigator.getGamepads()[index];
+}
+function getCorrectedAxes() {
+  return getGamepadInputs().axes.slice().map(x => {
+    let absx = Math.abs(x);
+    return absx < app.deadzone ? 0 : (absx - app.deadzone) / (1 - app.deadzone) * Math.sign(x);
+  });
+}
+
 function readGamepad() {
   if (!app.controllerConnected) return;
   //console.log(navigator.getGamepads()[index].axes);
-  let y1 = navigator.getGamepads()[index].axes[1];
-  let y2 = navigator.getGamepads()[index].axes[3];
-  input.v1 = Math.abs(y1) < app.deadzone ? 0 : (y1 * -app.environment.maxVelocity) << 0;
-  input.v2 = Math.abs(y2) < app.deadzone ? 0 : (y2 * -app.environment.maxVelocity) << 0;
+  let a = getCorrectedAxes();
+  input.v1 = (a[1] * -app.environment.maxVelocity) << 0;
+  input.v2 = (a[3] * -app.environment.maxVelocity) << 0;
 }
 
