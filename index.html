@@ -30,6 +30,11 @@
       <div class="ui divider"></div>
       <div class="section">
         <h4 class="ui header">Control Method</h4>
+        <select class="ui dropdown" v-model="selectedControlMethod">
+          <option v-for="(o, i) in controlMethods" :value="i">{{o.name}}</option>
+        </select>
+        <br>
+        <span style="white-space: pre;">{{ controlMethods[selectedControlMethod].description }}</span>
       </div>
       <div class="ui divider"></div>
       <div class="section">
@@ -68,7 +73,10 @@
         <h4 class="ui header">Car Status</h4>
         <code>
           v1: {{+car.v1.toFixed(2)}} <br>
-          v2: {{+car.v2.toFixed(2)}}
+          v2: {{+car.v2.toFixed(2)}} <br>
+          x: {{+car.x.toFixed(2)}} <br>
+          y: {{+car.y.toFixed(2)}} <br>
+          angle: {{-(normAngle(car.theta-Math.PI/2)*180/Math.PI).toFixed(2)}} deg
         </code>
       </div>
       <div class="ui divider"></div>
@@ -96,5 +104,6 @@
   <script src='app.js'></script>
   <script src='main.js'></script>
   <script src='sketch.js'></script>
+  <script src='controlMethods.js'></script>
 </body>
 </html>

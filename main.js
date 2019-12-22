@@ -1,12 +1,5 @@
-let car = {
-  x: 0,
-  y: 0,
-  theta: Math.PI / 2,
-  v1: 0,
-  v2: 0,
-  r: 67.8
-}
-app.$set(app, 'car', car);
+let car = app.car;
+// app.$set(app, 'car', car);
 let input = app.input;
 
 let lastTimeMs = performance.now();
@@ -62,7 +55,6 @@ function next() {
 }
 requestAnimationFrame(next);
 
-
 // ============
 // controller + ui
 
@@ -85,9 +77,6 @@ function getCorrectedAxes() {
 
 function readGamepad() {
   if (!app.controllerConnected) return;
-  //console.log(navigator.getGamepads()[index].axes);
-  let a = getCorrectedAxes();
-  input.v1 = (a[1] * -app.environment.maxVelocity) << 0;
-  input.v2 = (a[3] * -app.environment.maxVelocity) << 0;
+  app.controlMethods[app.selectedControlMethod].readGamepad();
 }
 
